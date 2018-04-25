@@ -6,15 +6,49 @@
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/modules.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script id="book-list-template" type="text/x-handlebars-template">
+  <li>TITLE: <span class="title">{{title}}</span> AUTHOR: <span class="author">{{author}}</span></li>
+  </script>
+
+  <script id="error-template" type="text/x-handlebars-template">
+    <li id="error-message"></li>
+    </script>
+  
+    <script id="detail-template" type="text/x-handlebars-template">
+      <div id="book-detail">
+        <h2 class="title">{{title}} </h2>
+        <h4 class="author">{{author}}</h4> 
+        <h4 class="isbn">isbn {{isbn}}</h4>
+        <img src="{{image_url}}" alt="">
+        <p class="description">{{description}}</p>
+      </div>
+      </script>
+
 </head>
 
 <body>
   <h1>JUSTIN MORRIS and ANDREW BAIK's AWESOME DA BEST BOOK STORE EVER!</h1>
+
+  <section class="container book-view">
+    list of all books by author and 
+    <ul id="book-list" class="list-of-books"></ul>
+  </section>
+  <section id="book-detail" class="container book-detail-view"></section>
+
+  <section class="container error-view"></section>
   
 
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
   <script src="scripts/models/book.js"></script>
   <script src="scripts/views/book-view.js"></script>
   <script src="scripts/views/error-view.js"></script>
+  <script src="scripts/views/routes.js"></script>
+
 </body>
 
 </html>
