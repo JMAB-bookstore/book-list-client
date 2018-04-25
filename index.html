@@ -12,6 +12,11 @@
   <li>TITLE: <span class="title">{{title}}</span> AUTHOR: <span class="author">{{author}}</span></li>
   </script>
 
+  <script id="error-template" type="text/x-handlebars-template">
+    <li id="error-message"></li>
+    </script>
+  
+
 </head>
 
 <body>
@@ -22,6 +27,8 @@
     <ul id="book-list" class="list-of-books"></ul>
   </section>
   <section class="container"></section>
+
+  <section class="container error-view"></section>
   
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
