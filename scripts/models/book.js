@@ -2,10 +2,17 @@
 
 var app = app || {};
 
+const ENV = {};
+
+ENV.isProduction = window.location.protocol === 'https:';
+ENV.productionApiUrl = 'https://jm-ab-booklist.herokuapp.com/';
+ENV.developmentApiUrl = 'http://localhost:8080';
+ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
+
 (function(module) {
 
   function Book(rawDataObj) {
-    Object.key(rawDataObj).forEach( key => this[key] = rawDataObj[key]);
+    Object.keys(rawDataObj).forEach( key => this[key] = rawDataObj[key]);
   }
 
   Book.all = [];
@@ -25,12 +32,12 @@ var app = app || {};
   };
 
   Book.fetchAll = callback => {
-    $.get('/api/v1/books')
+    $.get(`${ENV.apiURL}/api/v1/books`)
       .then(results => {
         Book.loadAll(results);
         callback();
-      });
-    // .catch(console.log('THIS IS AN ERROR'));
+      })
+      .catch(errorCallback);
   };
 
   module.Book = Book;
