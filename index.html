@@ -6,10 +6,22 @@
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/modules.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script id="book-list-template" type="text/x-handlebars-template">
+  <li>TITLE: <span class="title">{{title}}</span> AUTHOR: <span class="author">{{author}}</span></li>
+  </script>
+
 </head>
 
 <body>
   <h1>JUSTIN MORRIS and ANDREW BAIK's AWESOME DA BEST BOOK STORE EVER!</h1>
+
+  <section id="home-view">
+    list of all books by author and 
+    <ul class="list-of-books"></ul>
+  </section>
+  <section id="about-view"></section>
   
 
   <script src="scripts/models/book.js"></script>
