@@ -15,10 +15,17 @@ var app = app || {};
     });
   };
 
+  bookView.initDetailPage = (ctx) => {
+    console.log(ctx);
+    $('.container').hide();
+    $('.book-detail-view').empty().show();
+
+    app.Book.all.forEach( book => {
+      if( parseInt(book.id) === parseInt(ctx.params.id) ) {
+        $('#book-detail').append(book.detailToHtml());
+      }
+    });
+  };
+
   module.bookView = bookView;
-
 })(app) ;
-
-$(function () {
-  app.Book.fetchAll(app.bookView.initIndexPage);
-});

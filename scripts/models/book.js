@@ -25,6 +25,11 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
     return template(this);
   };
 
+  Book.prototype.detailToHtml = function() {
+    var template = Handlebars.compile($('#detail-template').text());
+    return template(this);
+  };
+
   Book.loadAll = bookData => {
     Book.all = bookData.map(book => {
       return new Book(book);
@@ -40,6 +45,15 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       })
       .catch(app.errorView.errorCallback);
     console.log(app.errorView.errorCallback);
+  };
+
+  Book.fetchOne = function(callback) {
+    $.ajax({
+      url: `${ENV.apiURL}/api/v1/books/:${this.id}`,
+      method: 'GET',
+    })
+      .then( callback )
+      .catch( console.error);
   };
 
 
