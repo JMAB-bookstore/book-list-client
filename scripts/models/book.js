@@ -5,8 +5,8 @@ var app = app || {};
 const ENV = {};
 
 ENV.isProduction = window.location.protocol === 'https:';
-ENV.productionApiUrl = 'https://jm-ab-booklist.herokuapp.com/';
-ENV.developmentApiUrl = 'http://localhost:8080';
+ENV.productionApiUrl = 'https://jm-ab-booklist.herokuapp.com';
+ENV.developmentApiUrl = 'http://localhost:3000';
 ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
 (function(module) {
@@ -17,16 +17,8 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
   Book.all = [];
 
-  Book.prototype.toHtml = function() {
-    var template = Handlebars.compile($('#book-list-template').text());
-
-    // no marked .body
-
-    return template(this);
-  };
-
-  Book.prototype.detailToHtml = function() {
-    var template = Handlebars.compile($('#detail-template').text());
+  Book.prototype.toHtml = function(htmlID) {
+    var template = Handlebars.compile($(htmlID).text());
     return template(this);
   };
 
@@ -38,13 +30,10 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
   Book.fetchAll = callback => {
     $.get(`${ENV.apiURL}/api/v1/books`)
-      .then(results => {
-        console.log(results);
-        Book.loadAll(results);
-        callback();
+      .then(results => { Book.loadAll(results);
       })
-      .catch(app.errorView.errorCallback);
-    console.log(app.errorView.errorCallback);
+      .then(callback)
+      .catch( err => app.errorView.errorCallBack(err));
   };
 
   Book.fetchOne = function(callback) {
@@ -53,7 +42,30 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       method: 'GET',
     })
       .then( callback )
-      .catch( console.error);
+      .catch( err => app.errorView.errorCallBack(err));
+  };
+
+  Book.prototype.addNewBook = function() {
+    $.post(`${ENV.apiURL}/api/v1/books`, {title: this.title, author: this.author, isbn: this.isbn, image_url: this.image_url, description: this.description})
+      .then( console.log('addneewbook pass'))
+      .catch( err => app.errorView.errorCallBack(err));
+  };
+
+  Book.prototype.updateBook = function() {
+
+    $.ajax({
+      url: `${ENV.apiURL}/api/v1/books/update/single-book${ctx.params.id}`,
+      method: 'PUT',
+      data: {
+        title: this.title,
+        author: this.author,
+        isbn: this.isbn,
+        image_url: this.image_url,
+        description: this.description
+      }
+    })
+      .then(console.log('Book Update sent to server'))
+      .catch(err => console.error('inside Book.updateBook:', err));
   };
 
 

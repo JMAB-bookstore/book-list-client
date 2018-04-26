@@ -7,10 +7,15 @@
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/modules.css">
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  
   <script id="book-list-template" type="text/x-handlebars-template">
-  <li>TITLE: <span class="title">{{title}}</span> AUTHOR: <span class="author">{{author}}</span></li>
+  <li>
+    <h2 class="title"><a href="/books/{{id}}"> {{title}} </a></h2> 
+    
+    <h3 class="author"><a href="/books/{{id}}"> {{author}} </a></h3>
+    <a href="/books/{{id}}"><img src="{{image_url}}" alt="" ></a>
+  </li>
   </script>
 
   <script id="error-template" type="text/x-handlebars-template">
@@ -24,22 +29,53 @@
         <h4 class="isbn">isbn {{isbn}}</h4>
         <img src="{{image_url}}" alt="">
         <p class="description">{{description}}</p>
+        <a href="/books/update/{{id}}"><button>Update</button></a>
+        <a href="/books/delete/{{id}}"><button>Delete</button></a>
       </div>
       </script>
-
+      <script id="update-book-template" type="text/x-handlebars-template">
+        <form id="update-book-form">
+          <input name="title" type="text" value="{{title}}">
+          <input name="author" type="text" value="{{author}}">
+          <input name="isbn" type="text" value="{{isbn}}">
+          <input name="image_url" type="text" value="{{image_url}}">
+          <textarea name="description" placeholder="Book Description" cols="30" rows="5">{{description}}</textarea>
+          <a href="/books/update/single-book{{id}}"><button>Update</button></a>
+        </form>
+      </script>
 </head>
 
 <body>
   <h1>JUSTIN MORRIS and ANDREW BAIK's AWESOME DA BEST BOOK STORE EVER!</h1>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/books/new">Create New</a></li>
+    </ul>
+  </nav>
 
   <section class="container book-view">
     list of all books by author and 
     <ul id="book-list" class="list-of-books"></ul>
   </section>
   <section id="book-detail" class="container book-detail-view"></section>
+  
+  <section id="book-update" class="container book-update-detail-view"></section>
 
   <section class="container error-view"></section>
   
+  <section id="form" class="container new-book-view">
+      <form id="new-book-form">
+        <input name="title" type="text" placeholder="Title">
+        <input name="author" type="text" placeholder="Author">
+        <input name="isbn" type="text" placeholder="isbn">
+        <input name="image_url" type="text" placeholder="Image URL">
+        <textarea name="description" placeholder="Book Description" cols="30" rows="5"></textarea>
+        <button>Submit</button>
+      </form>
+    </section>
+
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -48,7 +84,7 @@
   <script src="scripts/models/book.js"></script>
   <script src="scripts/views/book-view.js"></script>
   <script src="scripts/views/error-view.js"></script>
-  <script src="scripts/views/routes.js"></script>
+  <script src="scripts/controller/routes.js"></script>
 
 </body>
 
