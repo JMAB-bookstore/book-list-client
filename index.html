@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>THE BOOK STORE DOT COM</title>
+  <base href="./">
   <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
@@ -13,7 +14,7 @@
   </script>
 
   <script id="error-template" type="text/x-handlebars-template">
-    <li id="error-message"></li>
+    <li id="error-message">{{status}}: {{message}}</li>
     </script>
   
     <script id="detail-template" type="text/x-handlebars-template">
