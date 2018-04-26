@@ -11,8 +11,8 @@ var app = app || {};
     $('.book-view').show();
     $('#book-list').empty();
 
-    app.Book.all.forEach(e => {
-      $('#book-list').append(e.toHtml());
+    app.Book.all.forEach(book => {
+      $('#book-list').append(book.toHtml('#book-list-template'));
     });
   };
 
@@ -22,7 +22,7 @@ var app = app || {};
 
     app.Book.all.forEach( book => {
       if( parseInt(book.id) === parseInt(ctx.params.id) ) {
-        $('#book-detail').append(book.detailToHtml());
+        $('#book-detail').append(book.toHtml('#detail-template'));
       }
     });
   };
@@ -47,5 +47,30 @@ var app = app || {};
     page('/');
   };
 
+  bookView.initUpdate = (ctx) => {
+    $('.container').hide();
+    $('#book-update').show();
+
+    app.Book.all.forEach(book => {
+      if (parseInt(book.id) === parseInt(ctx.params.id)) {
+        $('#book-update').append(book.toHtml('#update-book-template'));
+      }
+    });
+    $('#update-book-form').on('submit', bookView.submitUpdate);
+  };
+
+  bookView.submitUpdate = () => {
+    // event.preventDefault();
+    let book = new app.Book ({
+      title: $('input[name=title]').val(),
+      author: $('input[name=author]').val(),
+      isbn: $('input[name=isbn]').val(),
+      image_url: $('input[name=image_url]').val(),
+      description: $('textarea[name=description]').val()
+    });
+    book.updateBook();
+  };
+
   module.bookView = bookView;
-})(app) ;
+
+})(app);

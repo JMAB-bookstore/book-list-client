@@ -29,7 +29,19 @@
         <h4 class="isbn">isbn {{isbn}}</h4>
         <img src="{{image_url}}" alt="">
         <p class="description">{{description}}</p>
+        <a href="/books/update/{{id}}"><button>Update</button></a>
+        <a href="/books/delete/{{id}}"><button>Delete</button></a>
       </div>
+      </script>
+      <script id="update-book-template" type="text/x-handlebars-template">
+        <form id="update-book-form">
+          <input name="title" type="text" value="{{title}}">
+          <input name="author" type="text" value="{{author}}">
+          <input name="isbn" type="text" value="{{isbn}}">
+          <input name="image_url" type="text" value="{{image_url}}">
+          <textarea name="description" placeholder="Book Description" cols="30" rows="5">{{description}}</textarea>
+          <a href="/books/update/single-book{{id}}"><button>Update</button></a>
+        </form>
       </script>
 </head>
 
@@ -48,6 +60,8 @@
     <ul id="book-list" class="list-of-books"></ul>
   </section>
   <section id="book-detail" class="container book-detail-view"></section>
+  
+  <section id="book-update" class="container book-update-detail-view"></section>
 
   <section class="container error-view"></section>
   

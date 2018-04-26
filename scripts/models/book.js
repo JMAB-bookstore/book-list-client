@@ -17,13 +17,8 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
   Book.all = [];
 
-  Book.prototype.toHtml = function() {
-    var template = Handlebars.compile($('#book-list-template').text());
-    return template(this);
-  };
-
-  Book.prototype.detailToHtml = function() {
-    var template = Handlebars.compile($('#detail-template').text());
+  Book.prototype.toHtml = function(htmlID) {
+    var template = Handlebars.compile($(htmlID).text());
     return template(this);
   };
 
@@ -54,6 +49,23 @@ ENV.apiURL = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
     $.post(`${ENV.apiURL}/api/v1/books`, {title: this.title, author: this.author, isbn: this.isbn, image_url: this.image_url, description: this.description})
       .then( console.log('addneewbook pass'))
       .catch( err => app.errorView.errorCallBack(err));
+  };
+
+  Book.prototype.updateBook = function() {
+
+    $.ajax({
+      url: `${ENV.apiURL}/api/v1/books/update/single-book${ctx.params.id}`,
+      method: 'PUT',
+      data: {
+        title: this.title,
+        author: this.author,
+        isbn: this.isbn,
+        image_url: this.image_url,
+        description: this.description
+      }
+    })
+      .then(console.log('Book Update sent to server'))
+      .catch(err => console.error('inside Book.updateBook:', err));
   };
 
 
